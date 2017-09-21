@@ -5,6 +5,9 @@ package com.lyz.zkrpc;
  */
 
 
+import org.springframework.stereotype.Component;
+import org.springframework.stereotype.Service;
+
 import java.lang.reflect.InvocationHandler;
 import java.lang.reflect.Method;
 import java.lang.reflect.Proxy;
@@ -13,6 +16,7 @@ import java.util.UUID;
 /**
  * 客户端RPC调用代理
  */
+@Component("rpcProxy")
 public class RpcProxy {
     private String serverAddress;
     private ServiceDiscovery serviceDiscovery;

@@ -14,7 +14,7 @@ import java.util.Map;
 /**
  * Created by qwj on 2017/9/4.
  */
-public class RpcHandler extends SimpleChannelInboundHandler<RpcRequest> {
+public class RpcHandler extends SimpleChannelInboundHandler<RpcRequest>{
     private static final Logger logger = LoggerFactory.getLogger(RpcHandler.class);
     private final Map<String, Object> handlerMap;
 
@@ -24,7 +24,7 @@ public class RpcHandler extends SimpleChannelInboundHandler<RpcRequest> {
 
     protected void channelRead0(ChannelHandlerContext ctx, RpcRequest request) throws Exception {
         RpcResponse response = new RpcResponse();
-        response.setResponsetId(request.getRequestId());
+        response.setRequestId(request.getRequestId());
         try {
             Object result = handle(request);
             response.setResult(result);
@@ -59,3 +59,8 @@ public class RpcHandler extends SimpleChannelInboundHandler<RpcRequest> {
         ctx.close();
     }
 }
+
+
+
+
+

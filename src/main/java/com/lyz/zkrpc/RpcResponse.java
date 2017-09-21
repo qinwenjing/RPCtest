@@ -5,12 +5,14 @@ package com.lyz.zkrpc;
  */
 public class RpcResponse {
     private String responsetId;
+    private String requestId;
     private String className;
     private String methodName;
     private Class<?> [] parameterTypes;
     private Object[] parameters;
     private Object result;
     private Throwable error;
+
 
     public String getResponsetId() {
         return responsetId;
@@ -66,5 +68,13 @@ public class RpcResponse {
 
     public void setError(Throwable error) {
         this.error = error;
+    }
+
+    public String getRequestId() {
+        return requestId;
+    }
+
+    public void setRequestId(String requestId) {
+        this.requestId = requestId;
     }
 }

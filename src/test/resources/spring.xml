@@ -8,8 +8,9 @@
       http://www.springframework.org/schema/context/spring-context.xsd">
 
 
-    <context:component-scan base-package="com.*" />
+    <context:component-scan base-package="com.lyz.zkrpc"/>
+    <!--<context:component-scan base-package="com.*" />-->
     <!--依赖资源文件-->
-    <import resource="classpath*:spring-zk-rpc-client.xml" />
-    <import resource="classpath*:spring-zk-rpc-server.xml" />
+    <import resource="classpath:spring-zk-rpc-client.xml" />
+    <import resource="classpath:spring-zk-rpc-server.xml" />
 </beans>

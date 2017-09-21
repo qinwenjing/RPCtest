@@ -16,14 +16,14 @@ import org.springframework.beans.factory.InitializingBean;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.ApplicationContextAware;
 
-import javax.naming.InitialContext;
-import java.lang.annotation.Annotation;
 import java.util.HashMap;
 import java.util.Map;
 
 /**
  * Created by qwj on 2017/9/4.
  */
+
+//负责导出（export）远程接口
 public class RpcServer implements ApplicationContextAware, InitializingBean {
     private static final Logger logger = LoggerFactory.getLogger(RpcServer.class);
     private String serverAddress;
@@ -45,14 +45,15 @@ public class RpcServer implements ApplicationContextAware, InitializingBean {
         EventLoopGroup workerGroup = new NioEventLoopGroup();
 
         try {
+            //服务端程序
             ServerBootstrap bootstrap = new ServerBootstrap();
             bootstrap.group(bossGroup, workerGroup).channel(NioServerSocketChannel.class)
                     .childHandler(new ChannelInitializer<SocketChannel>() {
                         protected void initChannel(SocketChannel channel) throws Exception {
                             channel.pipeline()
-                                    .addLast(new RpcDecoder(RpcRequest.class))
-                                    .addLast(new RpcEncoder(RpcResponse.class))
-                                    .addLast(new RpcHandler(handlerMap));
+                                    .addLast(new RpcDecoder(RpcRequest.class))   //将rpc请求进行解码处理（为了处理请求）
+                                    .addLast(new RpcEncoder(RpcResponse.class))  //将rpc响应进行编码处理（为了返回响应请求）
+                                    .addLast(new RpcHandler(handlerMap));        //处理rpc响应
                         }
                     })
                     .option(ChannelOption.SO_BACKLOG, 128)
@@ -79,8 +80,10 @@ public class RpcServer implements ApplicationContextAware, InitializingBean {
     }
 
     public void setApplicationContext(ApplicationContext ctx) throws BeansException {
+        //找到服务端所有提供的接口
         Map<String, Object> serviceBeanMap = ctx.getBeansWithAnnotation(RpcService.class);
         for(Object serviceBean : serviceBeanMap.values()){
+            //获得提供的服务接口名字
             String interfaceName = serviceBean.getClass().getAnnotation(RpcService.class).value().getName();
             handlerMap.put(interfaceName, serviceBean);
         }

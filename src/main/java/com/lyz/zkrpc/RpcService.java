@@ -12,7 +12,7 @@ import java.lang.annotation.Target;
  */
 @Target({ElementType.TYPE})
 @Retention(RetentionPolicy.RUNTIME)
-@Component
+@Component //表明可以被spring扫描到
 public @interface RpcService {
     Class<?> value();
 }

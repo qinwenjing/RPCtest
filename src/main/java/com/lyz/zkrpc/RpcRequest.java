@@ -1,7 +1,7 @@
 package com.lyz.zkrpc;
 
 /**
- * Created by qwj on 2017/9/4.
+ * Created by qwj on 2017/9/19.
  */
 public class RpcRequest {
     private String requestId;
@@ -49,5 +49,4 @@ public class RpcRequest {
     public void setParameters(Object[] parameters) {
         this.parameters = parameters;
     }
-
 }
