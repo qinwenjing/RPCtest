@@ -1,7 +1,5 @@
 package com.peiyu.simpleRpc;
 
-import com.lyz.zkrpc.SerializationUtil;
-
 import java.io.Serializable;
 
 /**

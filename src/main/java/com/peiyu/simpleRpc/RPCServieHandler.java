@@ -3,10 +3,8 @@ package com.peiyu.simpleRpc;
 import ch.qos.logback.core.util.CloseUtil;
 import com.alibaba.fastjson.JSON;
 
-import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
-import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.net.Socket;
 import java.util.Map;
@@ -28,15 +26,16 @@ public class RPCServieHandler implements Runnable {
         ObjectOutputStream output = null;
         try {
             input = new ObjectInputStream(client.getInputStream());
+            System.out.println("input:"+input);
             String param = input.readUTF();
             System.out.println("请求参数：" + param);
-            InvokeModel invokeModel = JSON.parseObject(param, InvokeModel.class);
+            InvokeModel invokeModel = JSON.parseObject(param , InvokeModel.class);
             Class<?> serviceClass = registerCenter.get(invokeModel.getServiceName());
             if(serviceClass == null){
                 throw new ClassNotFoundException(invokeModel.getServiceName() + " not found");
             }
             Method method = serviceClass.getMethod(invokeModel.getMethodName(), invokeModel.getParamsType());
-            Object result = method.invoke(serviceClass.newInstance(), invokeModel.getServiceName());
+            Object result = method.invoke(serviceClass.newInstance(), invokeModel.getParams());
             System.out.println("返回结果：" + JSON.toJSONString(result));
             output = new ObjectOutputStream(client.getOutputStream());
             output.writeUTF(JSON.toJSONString(result));

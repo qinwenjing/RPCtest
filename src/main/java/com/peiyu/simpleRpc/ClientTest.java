@@ -8,7 +8,7 @@ import java.net.InetSocketAddress;
 public class ClientTest {
     public static void main(String[] args) {
         InetSocketAddress addr = new InetSocketAddress("localhost", 9999);
-        SayHello sayHello = RPCClient.getProxyInstance(SayHello.class, addr);
+        SayHello sayHello = (SayHello)RPCClient.getProxyInstance(SayHello.class, addr);
         System.out.println("prc返回：" + sayHello.sayHello("张三"));
     }
 }

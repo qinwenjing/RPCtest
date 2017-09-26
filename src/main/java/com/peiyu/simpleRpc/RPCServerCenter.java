@@ -42,7 +42,7 @@ public class RPCServerCenter implements RPCServer {
             serverSocket.bind(new InetSocketAddress(port));
             System.out.println("server start at listen to " + port+"。。。。。。");
             isRunnig = true;
-            while(isRuning()){
+            while(isRunnig){
                 executor.execute(new RPCServieHandler(serverSocket.accept(), registerCenter));
             }
         }finally {

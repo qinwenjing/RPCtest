@@ -1,10 +1,10 @@
 package com.peiyu.simpleRpc;
 
 import ch.qos.logback.core.util.CloseUtil;
-import org.apache.hadoop.hbase.shaded.org.mortbay.util.ajax.JSON;
+import com.alibaba.fastjson.JSON;
+
 
 import java.io.ObjectInputStream;
-import java.io.ObjectOutput;
 import java.io.ObjectOutputStream;
 import java.lang.reflect.InvocationHandler;
 import java.lang.reflect.Method;
@@ -17,6 +17,7 @@ import java.net.Socket;
  * Created by qwj on 2017/9/20.
  */
 public class RPCClient<T> {
+    @SuppressWarnings("unchecked")
     public static<T> T getProxyInstance(final Class<T> clazz, final InetSocketAddress addr){
         return (T) Proxy.newProxyInstance(clazz.getClassLoader(), new Class<?>[]{clazz}, new InvocationHandler() {
             public Object invoke(Object proxy, Method method, Object[] args) throws Throwable {
@@ -28,7 +29,7 @@ public class RPCClient<T> {
                     socket.connect(addr);
                     oos = new ObjectOutputStream(socket.getOutputStream());
                     InvokeModel invokeModel = getInvolkModel(clazz, method, args);
-                    oos.writeUTF(JSON.toString(invokeModel));
+                    oos.writeUTF(JSON.toJSONString(invokeModel));
                     oos.flush();
                     ois = new ObjectInputStream(socket.getInputStream());
                     return ois.readUTF();
