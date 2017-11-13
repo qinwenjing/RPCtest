@@ -20,5 +20,7 @@ public class HelloServiceTest extends BaseTest{
         HelloService helloService = rpcProxy.create(HelloService.class);
         String result = helloService.sayHello("World");
         Assert.assertEquals("Hello! World", result);
+
+        System.out.println("hello world");
     }
 }
