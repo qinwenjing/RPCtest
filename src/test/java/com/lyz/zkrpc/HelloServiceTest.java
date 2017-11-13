@@ -22,5 +22,6 @@ public class HelloServiceTest extends BaseTest{
         Assert.assertEquals("Hello! World", result);
 
         System.out.println("hello world");
+        System.out.println("hello world22222");
     }
 }
